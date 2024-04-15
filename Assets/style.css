@@ -1,3 +1,22 @@
-/* ToDo: Formatting for the header */
+html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    margin: 0;
+    background-image: linear-gradient(rgb(132, 132, 255), rgb(11, 11, 128));
+    color: white;
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+    font-size: x-large;
+}
 /* ToDo: Formatting for the sidebar */
 /* Formatting for the forecast cards */
