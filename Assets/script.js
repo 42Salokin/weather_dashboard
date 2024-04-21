@@ -38,7 +38,15 @@ function getAPI (city) {
             console.log(lon); 
             const cityName = data.name;
             console.log(cityName); 
-            // getForecast(lat, lon, cityName);          
+            // getForecast(lat, lon, cityName);
+            const temp = data.main.temp;
+            console.log(temp);
+            const humidity = data.main.humidity;
+            console.log(humidity); 
+            const wind = data.wind.speed;
+            console.log(wind);
+            const icon = data.weather[0].icon;
+            console.log(icon);         
         });
     
 }
