@@ -8,12 +8,27 @@ cityBtn.addEventListener('click', function (event) {
     event.preventDefault;
     let city = cityInput.value;
     const sidebar = document.querySelector("#sidebar");
-    let cityHist = document.createElement("span");
+    empty(sidebar);
+    let cityHist = document.createElement("a");
     cityHist.setAttribute("class", "pastCity");
     cityHist.textContent = city;
     sidebar.appendChild(cityHist);
+
     getAPI(city);
 })
+
+// ToDo: On click, log city to local storage,
+// Clear all current cities in list,
+// Pull list of cities from local storage,
+// Display on screen
+
+function empty(element) {
+    while(element.firstElementChild) {
+        element.firstElementChild.remove();
+    }
+}
+
+
 
 // Sends fetch request to API for current weather info, calls weather display function with info
 function getAPI (city) {
@@ -31,7 +46,7 @@ function getAPI (city) {
 // Creates current weather display on page, calls forecast fetch function
 function weatherNow(data) {
     const today = document.querySelector("#today");
-
+    empty(today);
     const cityName = document.createElement("p");
     const day = document.createElement("p");
     const temp = document.createElement("p");
@@ -69,7 +84,7 @@ function weatherFore(data) {
     const foreArray = [data.list[4], data.list[12], data.list[20], data.list[28], data.list[36]];
     console.log(foreArray);
     const foreDiv = document.querySelector("#forecast");
-
+    empty(foreDiv);
     for (const fore of foreArray) {
         const card = document.createElement("ul");
         const date = document.createElement("li");
