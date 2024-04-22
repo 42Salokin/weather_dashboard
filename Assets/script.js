@@ -1,38 +1,50 @@
-let APIKey = "6afca093eca4db8e4a356c7dbf458132";
-let cityInput = document.querySelector("#city");
-let cityBtn = document.querySelector("#cityBtn");
-const repoList = document.querySelector('ul');
+const APIKey = "6afca093eca4db8e4a356c7dbf458132";
+const cityInput = document.querySelector("#city");
+const cityBtn = document.querySelector("#cityBtn");
+const cityList = document.querySelector("#cityList");
 
 // On click, appends city name to page, calls fetch function with city name
 cityBtn.addEventListener('click', function (event) {
     event.preventDefault;
-    let city = cityInput.value;
-    const sidebar = document.querySelector("#sidebar");
-    empty(sidebar);
-    let cityHist = document.createElement("a");
-    cityHist.setAttribute("class", "pastCity");
-    cityHist.textContent = city;
-    sidebar.appendChild(cityHist);
+    const city = cityInput.value;
+    storeCity(city);
+    cityInput.value = '';
+    
+    empty(cityList);
 
+    retrieveCity();
+    
     getAPI(city);
 })
 
-// ToDo: On click, log city to local storage,
-// Clear all current cities in list,
-// Pull list of cities from local storage,
+// ToDo: Pull list of cities from local storage,
 // Display on screen
+function storeCity(city) {
+    const cityArray = JSON.parse(localStorage.getItem('cityArray')) || [];
+    console.log(cityArray);
+    cityArray.push(city);
+    console.log(cityArray);
+    localStorage.setItem('cityArray', JSON.stringify(cityArray));
+    console.log(cityArray);
+}
 
-function empty(element) {
-    while(element.firstElementChild) {
-        element.firstElementChild.remove();
+function retrieveCity() {
+    const cityArray = JSON.parse(localStorage.getItem('cityArray')) || [];
+
+    for (const cityName of cityArray) {
+        const cityCard = document.createElement("li");
+        const cityHist = document.createElement("a");
+        cityHist.setAttribute("class", "pastCity");
+        cityHist.setAttribute("href", "#!");
+        cityHist.textContent = cityName;
+        cityCard.appendChild(cityHist);
+        cityList.appendChild(cityCard);
     }
 }
 
 
-
 // Sends fetch request to API for current weather info, calls weather display function with info
 function getAPI (city) {
-    console.log(city);
     const queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${APIKey}`;
     fetch(queryURL)   
         .then(function (response) {
@@ -69,6 +81,7 @@ function weatherNow(data) {
 // Sends fetch request for forecast, calls weather forecast display function
 function getFore(data) {
     const queryURL2 = `http://api.openweathermap.org/data/2.5/forecast?q=${data.name}&units=imperial&appid=${APIKey}`;
+    
     fetch(queryURL2)   
         .then(function (response) {
             return response.json();
@@ -80,11 +93,10 @@ function getFore(data) {
 
 // Takes five-day data and displays each day as list on page
 function weatherFore(data) {
-    console.log(data);
     const foreArray = [data.list[4], data.list[12], data.list[20], data.list[28], data.list[36]];
-    console.log(foreArray);
     const foreDiv = document.querySelector("#forecast");
     empty(foreDiv);
+
     for (const fore of foreArray) {
         const card = document.createElement("ul");
         const date = document.createElement("li");
@@ -104,5 +116,11 @@ function weatherFore(data) {
     }
 }
 
+// Empties each element so new data can be added
+function empty(element) {
+    while(element.firstElementChild) {
+        element.firstElementChild.remove();
+    }
+}
 
-
+retrieveCity();

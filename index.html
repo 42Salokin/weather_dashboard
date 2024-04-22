@@ -12,17 +12,20 @@
         <h1>Weather Dashboard</h1>
     </header>
     <main>
-        <div>
+        <section>
+            <h2>Search for a City:</h2>
             <label for="city">City:</label>
             <input type="text" name="city" id="city">
-            <button id="cityBtn">Submit</button>
-            <div id="sidebar"></div>
-        </div>
-        <div id="today"></div>
-        <div>
+            <button id="cityBtn">Search</button>
+            <div>
+                <ul id="cityList"></ul>
+            </div>
+        </section>
+        <section id="today"></section>
+        <section>
             <h3>5-Day Forecast:</h3>
             <div id="forecast"></div>
-        </div>
+        </section>
     </main>
     <!-- ToDo: create sidebar form to input city name -->
     <!-- ToDo: create empty elements for city name history below the form in the sidebar,
