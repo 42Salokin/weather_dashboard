@@ -19,38 +19,44 @@ cityBtn.addEventListener('click', function (event) {
 function getAPI (city) {
     console.log(city);
     const queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${APIKey}`;
-    fetch(queryURL)
-    //     {
-    //     method: 'GET',
-    //     headers: {
-    //     "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
-    //     "X-RapidAPI-Key": APIKey,
-    //     }
-    // }    
+    fetch(queryURL)   
         .then(function (response) {
             return response.json();
         })
         .then(function (data) {
-            console.log(data);
-            const lat = data.coord.lat;
-            console.log(lat);
-            const lon = data.coord.lon;
-            console.log(lon); 
-            const cityName = data.name;
-            console.log(cityName); 
-            // getForecast(lat, lon, cityName);
-            const temp = data.main.temp;
-            console.log(temp);
-            const humidity = data.main.humidity;
-            console.log(humidity); 
-            const wind = data.wind.speed;
-            console.log(wind);
-            const icon = data.weather[0].icon;
-            console.log(icon);         
-        });
-    
+            weatherNow(data);        
+        });    
 }
 
+function weatherNow(data) {
+    const today = document.querySelector("#today");
+    const lat = data.coord.lat;
+    const lon = data.coord.lon;
+    console.log(data);
+
+    const cityName = document.createElement("p");
+    const day = document.createElement("p");
+    const temp = document.createElement("p");
+    const wind = document.createElement("p");
+    const humidity = document.createElement("p");
+    const icon = document.createElement("img");
+
+    cityName.textContent = data.name;
+    day.textContent = `(${dayjs().format('MM/DD/YYYY')})`
+    temp.textContent = `Temp: ${data.main.temp}°F`;
+    wind.textContent = `Wind: ${data.wind.speed} MPH`;
+    humidity.textContent = `Humidity: ${data.main.humidity} %`;
+    icon.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
+
+    today.appendChild(cityName);
+    today.appendChild(day);
+    today.appendChild(icon);
+    today.appendChild(temp);
+    today.appendChild(wind);
+    today.appendChild(humidity);
+}
+
+// getForecast(lat, lon, cityName);
 // ToDo: make a fetch request from a geolocator API
 // ToDo: take the input from the form input and put it in local storage
 // ToDo: make a function to pull the relevant geolocation info, compare it to the input, 
