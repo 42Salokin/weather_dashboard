@@ -2,20 +2,20 @@ let APIKey = "6afca093eca4db8e4a356c7dbf458132";
 let cityInput = document.querySelector("#city");
 let cityBtn = document.querySelector("#cityBtn");
 const repoList = document.querySelector('ul');
-// const queryURL = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${APIKey}`;
-// ToDo: make a fetch request from the weather API
 
+// On click, appends city name to page, calls fetch function with city name
 cityBtn.addEventListener('click', function (event) {
     event.preventDefault;
     let city = cityInput.value;
     const sidebar = document.querySelector("#sidebar");
     let cityHist = document.createElement("span");
+    cityHist.setAttribute("class", "pastCity");
     cityHist.textContent = city;
     sidebar.appendChild(cityHist);
     getAPI(city);
 })
 
-
+// Sends fetch request to API for current weather info, calls weather display function with info
 function getAPI (city) {
     console.log(city);
     const queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${APIKey}`;
@@ -28,11 +28,9 @@ function getAPI (city) {
         });    
 }
 
+// Creates current weather display on page, calls forecast fetch function
 function weatherNow(data) {
     const today = document.querySelector("#today");
-    const lat = data.coord.lat;
-    const lon = data.coord.lon;
-    console.log(data);
 
     const cityName = document.createElement("p");
     const day = document.createElement("p");
@@ -48,18 +46,48 @@ function weatherNow(data) {
     humidity.textContent = `Humidity: ${data.main.humidity} %`;
     icon.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
 
-    today.appendChild(cityName);
-    today.appendChild(day);
-    today.appendChild(icon);
-    today.appendChild(temp);
-    today.appendChild(wind);
-    today.appendChild(humidity);
+    today.append(cityName, day, icon, temp, wind, humidity);
+
+    getFore(data);
 }
 
-// getForecast(lat, lon, cityName);
-// ToDo: make a fetch request from a geolocator API
-// ToDo: take the input from the form input and put it in local storage
-// ToDo: make a function to pull the relevant geolocation info, compare it to the input, 
-// and return the lat/long coordinates of that city
-// ToDo: make a function to pull the relevant weather info for the lat/long coordinates 
-// and put them on the screen 
+// Sends fetch request for forecast, calls weather forecast display function
+function getFore(data) {
+    const queryURL2 = `http://api.openweathermap.org/data/2.5/forecast?q=${data.name}&units=imperial&appid=${APIKey}`;
+    fetch(queryURL2)   
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            weatherFore(data);
+        });  
+}
+
+// Takes five-day data and displays each day as list on page
+function weatherFore(data) {
+    console.log(data);
+    const foreArray = [data.list[4], data.list[12], data.list[20], data.list[28], data.list[36]];
+    console.log(foreArray);
+    const foreDiv = document.querySelector("#forecast");
+
+    for (const fore of foreArray) {
+        const card = document.createElement("ul");
+        const date = document.createElement("li");
+        const icon = document.createElement("img");
+        const temp = document.createElement("li");
+        const wind = document.createElement("li");
+        const humidity = document.createElement("li");
+
+        date.textContent = dayjs.unix(fore.dt).format('MM/DD/YYYY');
+        icon.src = `https://openweathermap.org/img/wn/${fore.weather[0].icon}.png`;
+        temp.textContent = `Temp: ${fore.main.temp}°F`;
+        wind.textContent = `Wind: ${fore.wind.speed} MPH`;
+        humidity.textContent = `Humidity: ${fore.main.humidity} %`;
+
+        card.append(date, icon, temp, wind, humidity);
+        foreDiv.append(card);
+    }
+}
+
+
+
