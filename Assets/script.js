@@ -3,7 +3,7 @@ const cityInput = document.querySelector("#city");
 const cityBtn = document.querySelector("#cityBtn");
 const cityList = document.querySelector("#cityList");
 
-// On click, appends city name to page, calls fetch function with city name
+// On click, calls storage function, clears input field and city list, calls city list retrieval function, calls fetch function with city name
 cityBtn.addEventListener('click', function (event) {
     event.preventDefault;
     const city = cityInput.value;
@@ -17,24 +17,21 @@ cityBtn.addEventListener('click', function (event) {
     getAPI(city);
 })
 
-// ToDo: Pull list of cities from local storage,
-// Display on screen
+// Stores city selections in local storage
 function storeCity(city) {
     const cityArray = JSON.parse(localStorage.getItem('cityArray')) || [];
-    console.log(cityArray);
     cityArray.push(city);
-    console.log(cityArray);
     localStorage.setItem('cityArray', JSON.stringify(cityArray));
     console.log(cityArray);
 }
 
+// Pulls list of city selections from local storage and displays them on screen
 function retrieveCity() {
     const cityArray = JSON.parse(localStorage.getItem('cityArray')) || [];
 
     for (const cityName of cityArray) {
         const cityCard = document.createElement("li");
         const cityHist = document.createElement("a");
-        cityHist.setAttribute("class", "pastCity");
         cityHist.setAttribute("href", "#!");
         cityHist.textContent = cityName;
         cityCard.appendChild(cityHist);
@@ -42,6 +39,11 @@ function retrieveCity() {
     }
 }
 
+// If city in history list is clicked, fetches and displays data for that city
+cityList.addEventListener('click', function(event) {
+    let city = event.target.textContent;
+    getAPI(city);
+})
 
 // Sends fetch request to API for current weather info, calls weather display function with info
 function getAPI (city) {
@@ -59,7 +61,7 @@ function getAPI (city) {
 function weatherNow(data) {
     const today = document.querySelector("#today");
     empty(today);
-    const cityName = document.createElement("p");
+    const cityName = document.createElement("h2");
     const day = document.createElement("p");
     const temp = document.createElement("p");
     const wind = document.createElement("p");
