@@ -47,7 +47,7 @@ cityList.addEventListener('click', function(event) {
 
 // Sends fetch request to API for current weather info, calls weather display function with info
 function getAPI (city) {
-    const queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${APIKey}`;
+    const queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${APIKey}`;
     fetch(queryURL)   
         .then(function (response) {
             return response.json();
@@ -82,7 +82,7 @@ function weatherNow(data) {
 
 // Sends fetch request for forecast, calls weather forecast display function
 function getFore(data) {
-    const queryURL2 = `http://api.openweathermap.org/data/2.5/forecast?q=${data.name}&units=imperial&appid=${APIKey}`;
+    const queryURL2 = `https://api.openweathermap.org/data/2.5/forecast?q=${data.name}&units=imperial&appid=${APIKey}`;
     
     fetch(queryURL2)   
         .then(function (response) {
