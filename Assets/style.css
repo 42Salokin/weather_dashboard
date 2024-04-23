@@ -26,16 +26,67 @@ main {
 #sidebar {
     display: flex;
     flex-direction: column;
+    padding: 10px;
+}
+
+#city, #cityBtn {
+    margin: 10px;
+    border-radius: 5px;
+}
+
+#cityBtn {
+    background-image: linear-gradient(to right, rgb(132, 132, 255), rgb(11, 11, 128));
+    color: white;
+}
+
+#cityBtn:hover {
+    cursor: pointer;
+}
+
+#sidebar div h3 {
+    margin: 10px;
+    padding: 5px;
+    border-top: 1px black;
+}
+
+#sidebar div ul li {
+    background-color: rgb(132, 132, 255);
+    color: rgb(11, 11, 128);
+    text-align: center;
+    margin: 10px;
+    padding: 2px;
+    border: 1px outset rgb(11, 11, 128);
+    border-radius: 5px;
+}
+
+#today {
+    margin: 10px;
+    padding: 10px;
+    border: 1px outset black;
+    border-radius: 5px;
+    line-height: 20px;
+    text-align: center;
+}
+
+#five {
+    text-align: center;
 }
 
 #forecast {
     display: flex;
+    flex-wrap: wrap;
+    line-height: 20px;
+    height: fit-content;
 }
 
 #forecast ul {
-    background-color: rgb(11, 11, 128);
+    background-image: linear-gradient(to bottom right, rgb(132, 132, 255), rgb(11, 11, 128));
     color: white;
     margin: 10px;
+    padding: 5px;
+    border: 1px outset rgb(11, 11, 128);
+    border-radius: 5px;
+    text-align: center;
 }
 /* ToDo: Formatting for the sidebar */
 /* Formatting for the forecast cards */
