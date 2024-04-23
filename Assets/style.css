@@ -18,5 +18,24 @@ header {
     line-height: 50px;
     font-size: x-large;
 }
+
+main {
+    display: flex;
+}
+
+#sidebar {
+    display: flex;
+    flex-direction: column;
+}
+
+#forecast {
+    display: flex;
+}
+
+#forecast ul {
+    background-color: rgb(11, 11, 128);
+    color: white;
+    margin: 10px;
+}
 /* ToDo: Formatting for the sidebar */
 /* Formatting for the forecast cards */

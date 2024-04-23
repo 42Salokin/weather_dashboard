@@ -12,7 +12,7 @@
         <h1>Weather Dashboard</h1>
     </header>
     <main>
-        <section>
+        <section id="sidebar">
             <h2>Search for a City:</h2>
             <label for="city">City:</label>
             <input type="text" name="city" id="city">
@@ -21,17 +21,14 @@
                 <ul id="cityList"></ul>
             </div>
         </section>
-        <section id="today"></section>
         <section>
-            <h3>5-Day Forecast:</h3>
-            <div id="forecast"></div>
+            <div id="today"></div>
+            <div>
+                <h3>5-Day Forecast:</h3>
+                <div id="forecast"></div>
+            </div>
         </section>
-    </main>
-    <!-- ToDo: create sidebar form to input city name -->
-    <!-- ToDo: create empty elements for city name history below the form in the sidebar,
-    a display of the city name, date, and current weather status in the main,
-    and a display of the five day forecast for the city below that -->
-    
+    </main>    
 </body>
 <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
 <script src="./Assets/script.js"></script>
